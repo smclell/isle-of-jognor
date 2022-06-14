@@ -1298,7 +1298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 1
   outlineColor: {r: 0.8113208, g: 0.5588743, b: 0.16456035, a: 1}
-  outlineWidth: 2
+  outlineWidth: 5
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
@@ -1392,7 +1392,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02d0a5f2403eba5418d8734b26423f84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitTime: 0.5
 --- !u!1 &1494567233
 GameObject:
   m_ObjectHideFlags: 0
@@ -1722,6 +1721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 796e09e0436c6d34e8e7858c01e6ce71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxDistance: 10
 --- !u!1001 &2145947866
 PrefabInstance:
   m_ObjectHideFlags: 0
