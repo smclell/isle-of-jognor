@@ -10,11 +10,12 @@ public class Interactions : MonoBehaviour
     [SerializeField, Range(0f, 20f)]
     private float maxDistance = 10f;
 
+    private QuestList questList;
+
     // Start is called before the first frame update
     void Start()
     {
-        
-        //outline.enabled = false;
+        questList = new QuestList();
     }
 
     // Update is called once per frame
@@ -28,11 +29,6 @@ public class Interactions : MonoBehaviour
         {
             outline = hit.collider.gameObject.GetComponent<Outline>();
             outline.enabled = true;
-        }
-        else
-        {
-            outline = hit.collider.gameObject.GetComponent<Outline>();
-            outline.enabled = false;
         }
     }
 }
