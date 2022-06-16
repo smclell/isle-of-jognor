@@ -6,7 +6,14 @@ public class Outline_Interactions : MonoBehaviour
 {
     private Outline outline;
 
-    
+    [SerializeField, Range(0, 3)] public int relatedQuest;
+
+    [SerializeField, Range(0, 2)] public int relatedClue;
+
+    public int RelatedClue { get => relatedClue; set => relatedClue = value; }
+    public int RelatedQuest { get => relatedQuest; set => relatedQuest = value; }
+
+
     //[SerializeField, Range(0f, 20f)]
     //private float maxDistance = 10f;
 
