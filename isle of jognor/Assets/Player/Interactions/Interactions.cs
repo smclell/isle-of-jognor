@@ -38,14 +38,31 @@ public class Interactions : MonoBehaviour
                 int questNum = hit.collider.gameObject.GetComponent<Outline_Interactions>().RelatedQuest;
                 int clueNum = hit.collider.gameObject.GetComponent<Outline_Interactions>().RelatedClue;
 
-                quests.questList[questNum].activateQuest();
+                //quests.questList[questNum].activateQuest();
                 quests.questList[questNum].clueList[clueNum].toggleClue(true);
 
                 hit.collider.gameObject.GetComponent<Renderer>().enabled = false;
 
                 uiInventory.RefreshQuestList();
             }
+        } else if (Physics.Raycast(ray, out hit, maxDistance) && hit.collider.gameObject.CompareTag("Quest Giver"))
+        {
+            outline = hit.collider.gameObject.GetComponent<Outline>();
+            outline.enabled = true;
+            if (Input.GetKey(KeyCode.E))
+            {
+                int questNum = hit.collider.gameObject.GetComponent<Outline_Interactions>().RelatedQuest;
+                //int clueNum = hit.collider.gameObject.GetComponent<Outline_Interactions>().RelatedClue;
+
+                quests.questList[questNum].activateQuest();
+                //quests.questList[questNum].clueList[clueNum].toggleClue(true);
+
+                //hit.collider.gameObject.GetComponent<Renderer>().enabled = false;
+
+                uiInventory.RefreshQuestList();
+            }
         }
+
 
         if (Input.GetKeyUp(KeyCode.Tab))
         {
