@@ -12,6 +12,10 @@ public class Interactions : MonoBehaviour
 
     [SerializeField] private UI_Inventory uiInventory;
 
+    [SerializeField] private End_Screen endScreen;
+
+    //[SerializeField] private Text_Menu textMenu;
+
 
     private QuestList quests;
 
@@ -20,6 +24,10 @@ public class Interactions : MonoBehaviour
     {
         quests = new QuestList();
         uiInventory.setQuestList(quests);
+        uiInventory.gameObject.SetActive(false);
+
+        endScreen.gameObject.SetActive(false);
+        //textMenu.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -37,12 +45,14 @@ public class Interactions : MonoBehaviour
             {
                 int questNum = hit.collider.gameObject.GetComponent<Outline_Interactions>().RelatedQuest;
                 int clueNum = hit.collider.gameObject.GetComponent<Outline_Interactions>().RelatedClue;
+                string relatedText = hit.collider.gameObject.GetComponent<Outline_Interactions>().RelatedText;
 
                 //quests.questList[questNum].activateQuest();
                 quests.questList[questNum].clueList[clueNum].toggleClue(true);
 
-                hit.collider.gameObject.GetComponent<Renderer>().enabled = false;
-
+                if (relatedText == "") {
+                    hit.collider.gameObject.GetComponent<Renderer>().enabled = false;
+                }
                 uiInventory.RefreshQuestList();
             }
         } else if (Physics.Raycast(ray, out hit, maxDistance) && hit.collider.gameObject.CompareTag("Quest Giver"))
@@ -60,13 +70,65 @@ public class Interactions : MonoBehaviour
                 //hit.collider.gameObject.GetComponent<Renderer>().enabled = false;
 
                 uiInventory.RefreshQuestList();
+
+                //textMenu.updateTalkText(hit.collider.gameObject.GetComponent<Outline_Interactions>().RelatedText);
+
+                //textMenu.gameObject.SetActive(true);
+            }
+        }
+        else if (Physics.Raycast(ray, out hit, maxDistance) && hit.collider.gameObject.CompareTag("Interactable Door"))
+        {
+            outline = hit.collider.gameObject.GetComponent<Outline>();
+            outline.enabled = true;
+            if (Input.GetKey(KeyCode.E))
+            {
+                int questNum = hit.collider.gameObject.GetComponent<Outline_Interactions>().RelatedQuest;
+                int clueNum = hit.collider.gameObject.GetComponent<Outline_Interactions>().RelatedClue;
+
+                //quests.questList[questNum].activateQuest();
+                //quests.questList[questNum].clueList[clueNum].toggleClue(true);
+
+
+                if (quests.questList[questNum].clueList[clueNum].found)
+                {
+                    hit.collider.gameObject.SetActive(false);
+                }
+
+                //uiInventory.RefreshQuestList();
+
+                //textMenu.updateTalkText(hit.collider.gameObject.GetComponent<Outline_Interactions>().RelatedText);
+
+                //textMenu.gameObject.SetActive(true);
             }
         }
 
 
         if (Input.GetKeyUp(KeyCode.Tab))
         {
-            uiInventory.enabled = !uiInventory.enabled;
+            if (uiInventory.gameObject.activeSelf)
+            {
+                uiInventory.gameObject.SetActive(false);
+            }
+            else
+            {
+                uiInventory.gameObject.SetActive(true);
+            }
+            //UI_Inventory.SetActive(!UI_Inventory.activeInHierarchy);
+        }
+
+        int numQuests = 0;
+        int numFinished = 0;
+        foreach (Quest quest in quests.questList)
+        {
+            numQuests++;
+            if (quest.finished)
+            {
+                numFinished++;
+            }
+        }
+        if (numFinished == numQuests)
+        {
+            endScreen.gameObject.SetActive(true);
         }
     }
 }

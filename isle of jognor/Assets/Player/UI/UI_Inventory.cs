@@ -9,6 +9,7 @@ public class UI_Inventory : MonoBehaviour
     private QuestList questList;
     private Transform questSlotContainer;
     private Transform questSlotTemplate;
+    public bool enabled;
 
     private void Awake()
     {
@@ -24,9 +25,14 @@ public class UI_Inventory : MonoBehaviour
 
     public void RefreshQuestList()
     {
-        int x = 0;
-        int y = 0;
-        float questSlotCellSize = 30f;
+        foreach (Transform child in questSlotContainer)
+        {
+            if (child == questSlotTemplate) continue;
+            Destroy(child.gameObject);
+        }
+        float x = -0.5f;
+        float y = 0.25f;
+        float questSlotCellSize = 35f;
         foreach (Quest quest in questList.getQuestList())
         {
             if (quest.started)
@@ -47,11 +53,20 @@ public class UI_Inventory : MonoBehaviour
                 {
                     if (clue.found)
                     {
-                        shownClues += "- " + clue.clueInfo + " \n";
+                        if (clue.clueType.ToString() == "End")
+                        {
+                            shownClues = clue.clueInfo;
+                            quest.finished = true;
+                        }
+                        else
+                        {
+                            shownClues += "- " + clue.clueInfo + " \n";
+                        }
                     }
                     else
                     {
-                        shownClues += "- Hidden Clue \n";
+                        if (clue.clueType.ToString() != "End")
+                            shownClues += "- Hidden Clue \n";
                     }
                 }
                 questClues.SetText(shownClues);

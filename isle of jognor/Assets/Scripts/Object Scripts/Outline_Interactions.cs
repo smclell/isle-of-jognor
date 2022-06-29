@@ -8,10 +8,13 @@ public class Outline_Interactions : MonoBehaviour
 
     [SerializeField, Range(0, 3)] public int relatedQuest;
 
-    [SerializeField, Range(0, 2)] public int relatedClue;
+    [SerializeField, Range(0, 3)] public int relatedClue;
+
+    [SerializeField] private string relatedText;
 
     public int RelatedClue { get => relatedClue; set => relatedClue = value; }
     public int RelatedQuest { get => relatedQuest; set => relatedQuest = value; }
+    public string RelatedText { get => relatedText; set => relatedText = value; }
 
 
     //[SerializeField, Range(0f, 20f)]

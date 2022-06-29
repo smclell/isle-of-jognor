@@ -12,8 +12,10 @@ public class Quest
     public List<string> locations;
     public int numClues;
     public bool started;
+    public bool needKey;
+    public bool finished = false;
 
-    public Quest(string title, string info, int clues)
+    public Quest(string title, string info, int clues, bool needKey)
     {
         clueList = new List<Clue>();
         involved = new List<string>();
@@ -23,6 +25,7 @@ public class Quest
         this.questTitle = title;
         this.numClues = clues;
         this.started = false;
+        this.needKey = needKey;
 
         for (int i = 0; i < numClues; i++)
         {
@@ -41,7 +44,7 @@ public class Quest
     {
         foreach (Clue clue in clueList)
         {
-            clue.addInfo(this.involved, this.locations);
+            clue.addInfo(this.involved, this.locations, needKey);
         }
     }
 
